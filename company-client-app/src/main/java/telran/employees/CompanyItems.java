@@ -12,20 +12,19 @@ public class CompanyItems {
 	public static Item[] getItems(Company company) {
 		CompanyItems.company = company;
 		Item[] items = {
-				Item.of("add employee", CompanyItems::addEmployee),
-				Item.of("display employee data", CompanyItems::getEmployee),
-				Item.of("fire employee", CompanyItems::removeEmployee),
-				Item.of("display department budget", CompanyItems::getDepartmentBudget),
-				Item.of("display departments", CompanyItems::getDepartments),
-				Item.of("display managers with most factor", CompanyItems::getManagersWithMostFactor),
-
+				Item.of("Add employee", CompanyItems::addEmployee),
+				Item.of("Display employee data", CompanyItems::getEmployee),
+				Item.of("Fire employee", CompanyItems::removeEmployee),
+				Item.of("Display department budget", CompanyItems::getDepartmentBudget),
+				Item.of("Display departments", CompanyItems::getDepartments),
+				Item.of("Display managers with most factor", CompanyItems::getManagersWithMostFactor),
 		};
 		return items;
 
 	}
 
 	static void addEmployee(InputOutput io) {
-		Menu menu = new Menu("adding Employee of required Type", getAddEmployeeItems());
+		Menu menu = new Menu("Select required type of Employee", getAddEmployeeItems());
 		menu.perform(io);
 		io.writeLine("=".repeat(40));
 	}
@@ -113,14 +112,14 @@ public class CompanyItems {
 		long id = readEmployeeId(io);
 		Employee empl = company.removeEmployee(id);
 		io.writeLine(empl);
-		io.writeLine("has been removed from the company\n");
+		io.writeLine("Has been removed from the company\n");
 	}
 
 	static void getDepartmentBudget(InputOutput io) {
 		String department = readDepartment(io);
 		int budget = company.getDepartmentBudget(department);
-		String line = budget == 0 ? "no employees woring in entered department"
-				: "Budget of enetered department is " + budget;
+		String line = budget == 0 ? "No employees working in entered department"
+				: "Budget of entered department is " + budget;
 		io.writeLine(line);
 	}
 

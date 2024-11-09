@@ -1,6 +1,6 @@
 # HW 39 definition
-## company-client-appl
+## company-client-application
 ### Write all methods of the class CompanyTcpProxy
-## company-server-appl
+## company-server-application
 ### Introduce CompanyProtocol class implementing Protocol interface
-### Write appropriate Main class for launcing TcpServer
+### Write appropriate Main class for launching TcpServer
