@@ -1,7 +1,6 @@
 package telran.employees;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 import org.json.JSONArray;
 
@@ -41,9 +40,9 @@ public class CompanyServerProtocol implements Protocol {
         Response response = null;
         try {
             company.addEmployee(employee);
-            response = getOkResponse("Employee successfully added");
+            response = getOkResponse(employee.toString()+"\nEmployee successfully added to Company");
         } catch (Exception e) {
-            response = getWrongDataResponse("Employee with this ID is already present in the company");
+            response = getWrongDataResponse("Wrong data of Employee");
         }
         return response;
     }
@@ -85,15 +84,14 @@ public class CompanyServerProtocol implements Protocol {
     }
 
     private Response removeEmployee(String data) {
-        long id = Integer.valueOf(data);
         Response response = null;
-        try {
-            company.removeEmployee(id);
-            response = getOkResponse("Employee successfully deleted");
-        } catch (NoSuchElementException e) {
-            response = new Response(ResponseCode.WRONG_DATA,
-                    "Employee with this id is not found in the company");
+        Employee employee = company.removeEmployee(Long.valueOf(data));
+        if (employee != null) {
+            response = getOkResponse(employee.toString()+"\nEmployee fired");
+        } else {
+            response = getWrongDataResponse("Employee with this id is not found in the company");
         }
+
         return response;
     }
 

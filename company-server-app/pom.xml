@@ -27,7 +27,7 @@
 
         <dependency>
             <groupId>telran.employees</groupId>
-            <artifactId>company-implementation</artifactId>
+            <artifactId>company-inplementation</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
