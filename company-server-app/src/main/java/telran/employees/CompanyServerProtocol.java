@@ -40,7 +40,7 @@ public class CompanyServerProtocol implements Protocol {
         Response response = null;
         try {
             company.addEmployee(employee);
-            response = getOkResponse(employee.toString()+"\nEmployee successfully added to Company");
+            response = getOkResponse(employee.toString() + "\nEmployee successfully added to Company");
         } catch (Exception e) {
             response = getWrongDataResponse("Wrong data of Employee");
         }
@@ -79,19 +79,12 @@ public class CompanyServerProtocol implements Protocol {
         } else {
             response = getWrongDataResponse("Employee with this id is not found in the company");
         }
-
         return response;
     }
 
     private Response removeEmployee(String data) {
-        Response response = null;
         Employee employee = company.removeEmployee(Long.valueOf(data));
-        if (employee != null) {
-            response = getOkResponse(employee.toString()+"\nEmployee fired");
-        } else {
-            response = getWrongDataResponse("Employee with this id is not found in the company");
-        }
-
+        Response response = getOkResponse(employee.toString() + "\nEmployee fired");
         return response;
     }
 

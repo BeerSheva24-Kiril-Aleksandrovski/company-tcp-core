@@ -16,7 +16,7 @@ public class CompanyTcpProxy implements Company {
 
     @Override
     public Iterator<Employee> iterator() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
