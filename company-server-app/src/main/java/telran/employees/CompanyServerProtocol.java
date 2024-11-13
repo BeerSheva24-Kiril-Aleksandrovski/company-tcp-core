@@ -1,6 +1,7 @@
 package telran.employees;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 import org.json.JSONArray;
 
@@ -30,39 +31,25 @@ public class CompanyServerProtocol implements Protocol {
                 default -> getWrongDataResponse(type + " is wrong type");
             };
         } catch (Exception e) {
-            response = new Response(ResponseCode.WRONG_DATA, e.getMessage());
+            response = getWrongDataResponse(e.getMessage());
         }
         return response;
     }
 
     private Response addEmployee(String data) {
         Employee employee = Employee.getEmployeeFromJSON(data);
-        Response response = null;
-        try {
-            company.addEmployee(employee);
-            response = getOkResponse(employee.toString() + "\nEmployee successfully added to Company");
-        } catch (Exception e) {
-            response = getWrongDataResponse("Wrong data of Employee");
-        }
-        return response;
+        company.addEmployee(employee);
+        return getOkResponse(employee.toString() + "\nEmployee successfully added to Company");
     }
 
     private Response getDepartmentBudget(String data) {
-        Response response = null;
-        try {
-            String budget = String.valueOf(company.getDepartmentBudget(data));
-            response = getOkResponse(budget);
-        } catch (Exception e) {
-            response = getWrongDataResponse("Such department isn't present in the company");
-        }
-        return response;
+        int budget = company.getDepartmentBudget(data);
+        return getOkResponse(budget + "");
     }
 
     private Response getDepartments() {
-        Response response = null;
         String deps = Arrays.toString(company.getDepartments());
-        response = getOkResponse(deps);
-        return response;
+        return getOkResponse(deps);
     }
 
     private Response getManagersWithMostFactor() {
@@ -72,20 +59,17 @@ public class CompanyServerProtocol implements Protocol {
     }
 
     private Response getEmployee(String data) {
-        Response response = null;
-        Employee employee = company.getEmployee(Long.valueOf(data));
-        if (employee != null) {
-            response = getOkResponse(employee.toString());
-        } else {
-            response = getWrongDataResponse("Employee with this id is not found in the company");
+        long id = Long.parseLong(data);
+        Employee empl = company.getEmployee(id);
+        if (empl == null) {
+            throw new NoSuchElementException(String.format("Employee %d not found", id));
         }
-        return response;
+        return getOkResponse(empl.toString());
     }
 
     private Response removeEmployee(String data) {
         Employee employee = company.removeEmployee(Long.valueOf(data));
-        Response response = getOkResponse(employee.toString() + "\nEmployee fired");
-        return response;
+        return getOkResponse(employee.toString() + "\nEmployee fired");
     }
 
     private Response getOkResponse(String res) {
