@@ -15,6 +15,8 @@ public class Main {
         TcpServer server = new TcpServer(protocol, PORT);
         if (company instanceof Persistable persistable) {
             persistable.restoreFromFile(FILE_NAME);
+            AutoSaver autoSave = new AutoSaver(persistable);
+            autoSave.start();
         }
         server.run();
     }

@@ -21,9 +21,14 @@ public class CompanyServerProtocol implements Protocol {
             Class<Methods> clazz = Methods.class;
             Method method = clazz.getDeclaredMethod(type, String.class);
             response = (Response)method.invoke(methods, data);
+        } catch (NoSuchMethodException e) {
+            response = new Response(ResponseCode.WRONG_TYPE, type + " Wrong type");
         } catch (Exception e) {
-            response = new Response(ResponseCode.WRONG_DATA, e.getMessage());
+            Throwable causeExc = e.getCause();
+            String message = causeExc == null ? e.getMessage() : causeExc.getMessage();
+            response = new Response(ResponseCode.WRONG_DATA, message);
         }
+        
         return response;
     }
 }
