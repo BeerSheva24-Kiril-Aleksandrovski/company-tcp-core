@@ -2,7 +2,7 @@ package telran.employees;
 
 import telran.io.Persistable;
 import static telran.employees.ServerConfigProperties.FILE_NAME;
-import static telran.employees.ServerConfigProperties.AUTO_SAVE_INTERVAL;;
+import static telran.employees.ServerConfigProperties.AUTO_SAVE_INTERVAL;
 
 
 public class AutoSaver extends Thread {
@@ -10,6 +10,7 @@ public class AutoSaver extends Thread {
 
     public AutoSaver(Persistable persistable) {
         this.persistable = persistable;
+        setDaemon(true);
     }
 
     @Override

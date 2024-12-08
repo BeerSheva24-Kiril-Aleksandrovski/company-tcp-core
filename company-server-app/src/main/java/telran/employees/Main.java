@@ -17,6 +17,7 @@ public class Main {
             persistable.restoreFromFile(FILE_NAME);
             AutoSaver autoSave = new AutoSaver(persistable);
             autoSave.start();
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> persistable.saveToFile(FILE_NAME)));
         }
         server.run();
     }
